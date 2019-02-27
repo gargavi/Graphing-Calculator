@@ -1,0 +1,69 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import sympy as sp
+
+#ENTERING THE WINDOW BOUNDS:
+start = float(raw_input('enter lower x value; x = '))
+end = float(raw_input('enter upper x value; x = '))
+start1 = float(raw_input('enter lower y value; y = '))
+end1 = float(raw_input('enter upper y value; y = '))
+
+#GRAPHING THE ORIGINAL FUNCTION:
+x = np.linspace(start, end, 20000)
+d = raw_input("enter function here; y = ")
+y = eval(str(d))
+plt.plot(x,y,'-k')
+
+#DIFFERENTIATING THE ORIGINAL FUNCTION:
+x = sp.Symbol('x')
+c = raw_input('enter function without the numpy; y = ')
+dydx = sp.diff(c, x)
+print dydx
+t = dydx
+
+#GRAPHING DY/DX:
+x = np.linspace(start,end,20000)
+z = raw_input('copy & paste first derivative here with numpy; y = ')
+a = eval(str(z))
+plt.plot(x,a,'-b')
+
+#DIFFERENTIATING DY/DX TO GET D2Y/DX2:
+x = sp.Symbol('x')
+d2xdy2 = sp.diff(t, x)
+print d2xdy2
+
+#GRAPHING D2Y/DX2:
+x = np.linspace(start,end,20000)
+L = raw_input('copy & paste second derivative here with numpy; y = ')
+l = eval(str(L))
+plt.plot(x,l,'-y')
+
+#PLAN B FOR IDENTIFYING THE MAX AND MIN
+#lol1 = (a<0)
+#lol2 = (a>0)
+#plt.plot(x[lol1], y[lol1], lw=3)
+#plt.plot(x[lol2],y[lol2],linestyle='--', lw=5)
+
+
+#MARKING CONCAVITY:
+segment1 = (l<0)
+segment2 = (l>0)
+plt.plot(x[segment1], y[segment1], '-k', lw=1)
+plt.plot(x[segment2], y[segment2], '-r', lw=1)
+
+if t == float('inf') or t== float('inf'):
+    plt.axvline(linewidth=4,color='cyan')
+    plt.show()
+
+plt.grid()
+plt.xlim(start, end)
+plt.ylim(start1,end1)
+
+print 'original function when concave down = black'
+print 'original function when concave up = red'
+#print 'original function when increasing = dashed green line'
+#print 'original function when decreasing = thick blue line'
+print 'first derivative = blue'
+print 'second derviative = yellow'
+
+plt.show()
