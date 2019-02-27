@@ -1,0 +1,85 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import sympy as sp
+
+fig1 = plt.figure()
+ax1 = fig1.add_subplot(111)
+fig2 = plt.figure()
+ax2 = fig2.add_subplot(111)
+
+#ENTERING THE WINDOW BOUNDS:
+start = float(raw_input('enter lower x value; x = '))
+end = float(raw_input('enter upper x value; x = '))
+start1 = float(raw_input('enter lower y value; y = '))
+end1 = float(raw_input('enter upper y value; y = '))
+
+#GRAPHING THE ORIGINAL FUNCTION:
+x = np.linspace(start, end, 20000)
+d = raw_input("enter function here; y = ")
+y = eval(str(d))
+
+#DIFFERENTIATING THE ORIGINAL FUNCTION:
+x = sp.Symbol('x')
+c = raw_input('enter function without the numpy; y = ')
+dydx = sp.diff(c, x)
+print dydx
+t = dydx
+
+#GRAPHING DY/DX:
+x = np.linspace(start,end,20000)
+z = raw_input('copy & paste first derivative here with numpy; y = ')
+a = eval(str(z))
+ax1.plot(x,a,'-b')
+ax2.plot(x,a,'-b')
+
+
+#DIFFERENTIATING DY/DX TO GET D2Y/DX2:
+x = sp.Symbol('x')
+d2xdy2 = sp.diff(t, x)
+print d2xdy2
+
+#GRAPHING D2Y/DX2:
+x = np.linspace(start,end,20000)
+L = raw_input('copy & paste second derivative here with numpy; y = ')
+l = eval(str(L))
+ax1.plot(x,l,'-y')
+ax2.plot(x,l,'-y')    
+
+#PLAN B FOR IDENTIFYING THE MAX AND MIN
+lol1 = (a<0)
+lol2 = (a>0)
+lol3 = (t==0)
+ax1.plot(x[lol1], y[lol1], lw=5)
+ax1.plot(x[lol2],y[lol2],linestyle='--', lw=5)
+#ax1.plot(x[lol3],y[lol3],'ro', lw = 20)
+
+#MARKING CONCAVITY:
+segment1 = (l<0)
+segment2 = (l>0)
+ax2.plot(x[segment1], y[segment1], '-k', lw=3)
+ax2.plot(x[segment2], y[segment2], '-r', lw=3)
+
+if t == float('inf') or t== float('inf'):
+    ax1.axvline(linewidth=4,color='cyan')
+    ax2.axvline(linewidth=4,color='cyan')
+    plt.show()
+
+ax1.set_xlim(start,end)
+ax1.set_ylim(start1,end1)
+ax2.set_xlim(start,end)
+ax2.set_ylim(start1,end1)
+
+#axes
+#ax1.axhline(y=0, xmin=-10000, xmax=10000, linewidth=4, color = 'k')
+#ax2.axhline(y=0, xmin=-10000, xmax=10000, linewidth=4, color = 'k')
+#ax1.axvline(x=0, ymin=-10000, ymax=10000, linewidth=4, color = 'k')
+#ax2.axvline(x=0, ymin=-10000, ymax=10000, linewidth=4, color = 'k')
+
+print 'original function when concave down = black'
+print 'original function when concave up = red'
+print 'original function when increasing = thick green'
+print 'original function when decreasing = thick blue'
+print 'first derivative = blue'
+print 'second derviative = yellow'
+
+plt.show()
